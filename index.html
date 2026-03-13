@@ -758,6 +758,46 @@
       .nav-links { display: none; }
     }
 
+    /* TESTIMONIALS */
+    .testimonials-section {
+      background: var(--gray-900);
+      padding: 6rem 4rem;
+    }
+    .testimonials-section .section-label { color: var(--red-light); }
+    .testimonials-section .section-title { color: var(--white); margin-bottom: 3rem; }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      border-left: 4px solid var(--red);
+      padding: 2rem;
+      background: rgba(255,255,255,0.04);
+    }
+    .testimonial-quote {
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--gray-300);
+      margin-bottom: 1.5rem;
+    }
+    .testimonial-attr {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red-light);
+    }
+    @media (max-width: 768px) {
+      .testimonials-section { padding: 4rem 2rem; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -915,6 +955,26 @@
       </div>
       <p class="service-area" style="margin-top:1rem;">Serving Monticello, Tallahassee, Madison, Perry, Quincy, and surrounding communities. Call us to discuss your project — no job is too large or too small.</p>
       <a href="tel:8503471467" class="btn-primary" style="margin-top:2rem;">Call 850-347-1467</a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <p class="section-label">What Our Clients Say</p>
+    <h2 class="section-title">Real Results.<br />Real Clients.</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"[TESTIMONIAL 1 — paste customer quote here, pulled from Google or Facebook review]"</p>
+        <p class="testimonial-attr">[First Name L.] &mdash; [Project Type], [City]</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"[TESTIMONIAL 2 — paste customer quote here, pulled from Google or Facebook review]"</p>
+        <p class="testimonial-attr">[First Name L.] &mdash; [Project Type], [City]</p>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"[TESTIMONIAL 3 — paste customer quote here, pulled from Google or Facebook review]"</p>
+        <p class="testimonial-attr">[First Name L.] &mdash; [Project Type], [City]</p>
+      </div>
     </div>
   </section>
 
