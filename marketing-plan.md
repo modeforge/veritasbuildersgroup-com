@@ -21,7 +21,7 @@ This is the single highest-ROI action. A complete GBP is the primary driver of "
 - **Website:** veritasbuildersgroup.com
 - **Hours:** Mon–Fri 8am–5pm, Sat by appointment (confirm with client)
 - **Business description** (use all 750 characters):
-  > Veritas Builders Group is a Florida Certified Building Contractor (CBC1266699) serving Jefferson County and North Florida. We specialize in kitchen and bathroom remodels, custom home builds, decks, sheds, flooring, and solar installation. Licensed, insured, and locally owned in Monticello. Serving Tallahassee, Madison, Perry, Quincy, and surrounding areas. Call for a free estimate: 850-347-1467.
+  > Veritas Builders Group is a Florida Certified Building Contractor (CBC1266699) serving Jefferson County and North Florida. We specialize in kitchen and bathroom remodels, custom home builds, decks, sheds, flooring, and solar installation. Licensed, insured, and locally owned in Monticello. Serving Tallahassee, Madison, Perry, Quincy, and surrounding areas. Call us: 850-347-1467.
 
 **Photos to upload immediately:**
 - Before/after kitchen photos (already on the website)
@@ -31,11 +31,10 @@ This is the single highest-ROI action. A complete GBP is the primary driver of "
 
 **Seed the Q&A section yourself:**
 - "Are you licensed and insured?" → Yes, FL Certified Building Contractor CBC1266699, fully insured.
-- "Do you offer free estimates?" → Yes, we offer free on-site estimates.
 - "What areas do you serve?" → Jefferson County, Leon County, Madison County, Taylor County, Gadsden County, and surrounding North Florida.
 - "Do you do small jobs or just big builds?" → We handle projects of all sizes, from small repairs to full custom builds.
 
-**Weekly posts:** Once set up, post 1–2x per week — before/after photos, completed job announcements, or free estimate offers. Even a phone photo with "Just finished this kitchen remodel in Monticello — call 850-347-1467 for a free estimate" works.
+**Weekly posts:** Once set up, post 1–2x per week — before/after photos, completed job announcements, or seasonal offers. Even a phone photo with "Just finished this kitchen remodel in Monticello — call 850-347-1467" works.
 
 ---
 
