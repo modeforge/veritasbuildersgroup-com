@@ -808,6 +808,57 @@
     .hero-h1 { animation: fadeUp 0.6s 0.1s ease both; }
     .hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
     .hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
+
+    /* CTA BAND */
+    .cta-band {
+      background: var(--red);
+      padding: 3.5rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .cta-band-text {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .cta-band-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-shrink: 0;
+    }
+    .cta-band-phone {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .cta-band-phone:hover { text-decoration: underline; }
+    .cta-band-btn {
+      background: var(--white);
+      color: var(--red);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .cta-band-btn:hover { background: var(--gray-100); }
+    @media (max-width: 768px) {
+      .cta-band { flex-direction: column; text-align: center; padding: 3rem 2rem; }
+      .cta-band-text { font-size: 1.5rem; }
+      .cta-band-actions { flex-direction: column; gap: 1rem; }
+    }
   </style>
 </head>
 <body>
@@ -977,6 +1028,15 @@
       </div>
     </div>
   </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <p class="cta-band-text">Ready to Start Your Project?</p>
+    <div class="cta-band-actions">
+      <a href="tel:8503471467" class="cta-band-phone">850-347-1467</a>
+      <a href="#contact" class="cta-band-btn">Get a Free Estimate</a>
+    </div>
+  </div>
 
   <!-- CONTACT -->
   <section class="contact-section" id="contact">
