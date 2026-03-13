@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Gallery | Veritas Builders Group — Monticello, FL</title>
+  <meta name="description" content="Browse completed projects by Veritas Builders Group — kitchen remodels, custom builds, and more across Jefferson County and North Florida.">
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAXElEQVR42u2UUQoAIAhDd59O0O272YIOEFORCBZ9Tl/qDGuO1gsDDPgYQFLPchEjF6bLUAlWBKg8UCkR6SaIDURujLoFkLBKyGCxPeA5vYvWDvBfZIABBhjwArAB4YKvpvjW5yYAAAAASUVORK5CYII=">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:       #C0392B;
+      --red-dark:  #96281B;
+      --red-light: #E74C3C;
+      --gray-900:  #1a1a1a;
+      --gray-800:  #2d2d2d;
+      --gray-600:  #555555;
+      --gray-300:  #cccccc;
+      --gray-100:  #f5f5f5;
+      --gold:      #B8A97A;
+      --white:     #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--white);
+      color: var(--gray-900);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(26,26,26,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1.15;
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      display: block;
+      font-weight: 400;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-300);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--red-light); }
+
+    .nav-links a.active {
+      color: var(--white);
+    }
+
+    .nav-cta {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 0.55rem 1.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--red-dark); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 10rem 5rem 5rem;
+      background: var(--gray-900);
+      border-bottom: 2px solid var(--red);
+    }
+
+    .page-eyebrow {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--red-light);
+      margin-bottom: 1rem;
+    }
+
+    .page-h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1.25rem;
+    }
+
+    .page-intro {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gray-300);
+      line-height: 1.65;
+      max-width: 520px;
+    }
+
+    /* ── PROJECTS GRID ── */
+    .projects-section {
+      padding: 5rem;
+      background: var(--gray-100);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* ── PROJECT CARD ── */
+    .project-card {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--gray-800);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(26,26,26,0.75);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+    }
+
+    .project-card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .card-type {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+      transform: translateY(12px);
+      transition: transform 0.3s ease;
+    }
+
+    .card-location {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.82rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gray-300);
+      margin-top: 0.3rem;
+      transform: translateY(12px);
+      transition: transform 0.3s ease 0.04s;
+    }
+
+    .project-card:hover .card-type,
+    .project-card:hover .card-location {
+      transform: translateY(0);
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      width: 90vw;
+      max-width: 960px;
+      background: var(--gray-900);
+      border-top: 3px solid var(--red);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -2.5rem;
+      right: 0;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-300);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem 0;
+      transition: color 0.2s;
+    }
+
+    .lightbox-close:hover { color: var(--white); }
+
+    /* Slider inside lightbox */
+    .lb-slider {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+      cursor: col-resize;
+      user-select: none;
+    }
+
+    .lb-slider img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lb-before-img {
+      z-index: 1;
+    }
+
+    .lb-after-img {
+      z-index: 0;
+    }
+
+    .lb-divider {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: var(--white);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .lb-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 4;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      letter-spacing: -0.05em;
+      color: var(--gray-900);
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .lb-label {
+      position: absolute;
+      bottom: 1rem;
+      z-index: 3;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.55);
+      color: var(--white);
+      padding: 0.3rem 0.7rem;
+      pointer-events: none;
+    }
+
+    .lb-label-before { left: 1rem; }
+    .lb-label-after  { right: 1rem; }
+
+    /* Single-image lightbox (no before) */
+    .lb-single {
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+    }
+
+    .lb-single img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lightbox-meta {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    .lb-meta-type {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .lb-meta-location {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gray-300);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111;
+      border-top: 2px solid var(--red);
+      padding: 2rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .footer-logo span {
+      display: block;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      color: var(--gray-600);
+      margin-top: 0.2rem;
+    }
+
+    .footer-copy {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--gray-600);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--red-light); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .page-header { padding: 8rem 2.5rem 4rem; }
+      .projects-section { padding: 3rem 2.5rem; }
+      footer { padding: 2rem; flex-direction: column; text-align: center; }
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .lb-slider { height: 50vw; min-height: 220px; }
+      .lb-single { height: 50vw; min-height: 220px; }
+    }
+
+    @media (max-width: 600px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .page-header { padding: 7rem 1.5rem 3rem; }
+      .projects-section { padding: 2.5rem 1.5rem; }
+      .lightbox-inner { width: 96vw; }
+      .lb-slider { height: 55vw; min-height: 200px; }
+      .lb-single { height: 55vw; min-height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      Veritas Builders Group
+      <span>Licensed · Monticello, FL</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Our Work</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <a href="tel:8503471467" class="nav-cta">850-347-1467</a>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <p class="page-eyebrow">Our Work</p>
+    <h1 class="page-h1">Project Gallery</h1>
+    <p class="page-intro">Real jobs, real results — from kitchen transformations to full custom builds across Jefferson County and North Florida.</p>
+  </header>
+
+  <!-- PROJECTS GRID -->
+  <section class="projects-section">
+    <div class="projects-grid">
+
+      <!-- To add a new project: duplicate the .project-card div below, update src, data-type, data-location, data-after, data-before, and the alt text -->
+      <div
+        class="project-card"
+        data-type="Kitchen Remodel"
+        data-location="Monticello, FL"
+        data-after="/public/images/kitchen-after.jpg"
+        data-before="/public/images/kitchen-before.jpg"
+        role="button"
+        tabindex="0"
+        aria-label="Kitchen Remodel, Monticello FL — click to view before and after"
+      >
+        <img src="/public/images/kitchen-after.jpg" alt="Kitchen remodel after — modern white shaker cabinets, granite countertops, Monticello FL" />
+        <div class="card-overlay">
+          <p class="card-type">Kitchen Remodel</p>
+          <p class="card-location">Monticello, FL</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project detail">
+    <div class="lightbox-inner" id="lightboxInner">
+      <button class="lightbox-close" id="lightboxClose">✕ Close</button>
+
+      <!-- Slider view (before + after) -->
+      <div class="lb-slider" id="lbSlider" style="display:none;">
+        <img class="lb-after-img"  id="lbAfterImg"  src="" alt="After" />
+        <img class="lb-before-img" id="lbBeforeImg" src="" alt="Before" />
+        <div class="lb-divider" id="lbDivider"></div>
+        <div class="lb-handle"  id="lbHandle">&#9664;&#9654;</div>
+        <span class="lb-label lb-label-before">Before</span>
+        <span class="lb-label lb-label-after">After</span>
+      </div>
+
+      <!-- Single image view (after only) -->
+      <div class="lb-single" id="lbSingle" style="display:none;">
+        <img id="lbSingleImg" src="" alt="" />
+      </div>
+
+      <div class="lightbox-meta">
+        <span class="lb-meta-type"  id="lbMetaType"></span>
+        <span class="lb-meta-location" id="lbMetaLocation"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      Veritas Builders Group LLC
+      <span>Licensed · Insured · CBC1266699 · Monticello, FL</span>
+    </div>
+    <p class="footer-copy">© 2025 Veritas Builders Group LLC. All rights reserved.</p>
+    <ul class="footer-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="tel:8503471467">Call Us</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // ── Card click → open lightbox ──────────────────────────────────────────
+    const lightbox    = document.getElementById('lightbox');
+    const lbInner     = document.getElementById('lightboxInner');
+    const lbClose     = document.getElementById('lightboxClose');
+    const lbSlider    = document.getElementById('lbSlider');
+    const lbSingle    = document.getElementById('lbSingle');
+    const lbAfterImg  = document.getElementById('lbAfterImg');
+    const lbBeforeImg = document.getElementById('lbBeforeImg');
+    const lbSingleImg = document.getElementById('lbSingleImg');
+    const lbDivider   = document.getElementById('lbDivider');
+    const lbHandle    = document.getElementById('lbHandle');
+    const lbMetaType  = document.getElementById('lbMetaType');
+    const lbMetaLoc   = document.getElementById('lbMetaLocation');
+
+    function openLightbox(card) {
+      const type     = card.dataset.type     || '';
+      const location = card.dataset.location || '';
+      const after    = card.dataset.after    || '';
+      const before   = card.dataset.before   || '';
+
+      lbMetaType.textContent = type;
+      lbMetaLoc.textContent  = location;
+
+      if (before && after) {
+        // Show slider
+        lbAfterImg.src  = after;
+        lbAfterImg.alt  = type + ' — after';
+        lbBeforeImg.src = before;
+        lbBeforeImg.alt = type + ' — before';
+        setSliderPosition(50);
+        lbSlider.style.display = '';
+        lbSingle.style.display = 'none';
+      } else {
+        // Show single image
+        lbSingleImg.src = after || before;
+        lbSingleImg.alt = type;
+        lbSlider.style.display = 'none';
+        lbSingle.style.display = '';
+      }
+
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      isDragging = false;
+    }
+
+    // Wire up all project cards (click and keyboard)
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', () => openLightbox(card));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openLightbox(card);
+        }
+      });
+    });
+
+    // Close via button
+    lbClose.addEventListener('click', closeLightbox);
+
+    // Close via click outside inner content
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // Close via ESC key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+        closeLightbox();
+      }
+    });
+
+    // ── Before/After slider ────────────────────────────────────────────────
+    let isDragging = false;
+
+    function setSliderPosition(pct) {
+      pct = Math.max(5, Math.min(95, pct));
+      lbBeforeImg.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+      lbDivider.style.left = pct + '%';
+      lbHandle.style.left  = pct + '%';
+    }
+
+    function getSliderPercent(e, el) {
+      const rect = el.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      return ((clientX - rect.left) / rect.width) * 100;
+    }
+
+    lbSlider.addEventListener('mousedown', e => {
+      isDragging = true;
+      setSliderPosition(getSliderPercent(e, lbSlider));
+    });
+
+    lbSlider.addEventListener('touchstart', e => {
+      isDragging = true;
+      setSliderPosition(getSliderPercent(e, lbSlider));
+    }, { passive: true });
+
+    document.addEventListener('mousemove', e => {
+      if (isDragging) setSliderPosition(getSliderPercent(e, lbSlider));
+    });
+
+    document.addEventListener('touchmove', e => {
+      if (isDragging) setSliderPosition(getSliderPercent(e, lbSlider));
+    }, { passive: true });
+
+    document.addEventListener('mouseup',  () => { isDragging = false; });
+    document.addEventListener('touchend', () => { isDragging = false; });
+  </script>
+
+</body>
+</html>
