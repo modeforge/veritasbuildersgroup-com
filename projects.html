@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project Gallery | Veritas Builders Group — Monticello, FL</title>
   <meta name="description" content="Browse completed projects by Veritas Builders Group — kitchen remodels, custom builds, and more across Jefferson County and North Florida.">
+  <meta property="og:title" content="Projects — Veritas Builders Group">
+  <meta property="og:description" content="Browse completed projects: kitchen remodels, decks, custom builds, and more. Veritas Builders Group serves Jefferson County and North Florida.">
+  <meta property="og:image" content="https://veritasbuildersgroup.com/public/images/kitchen-after.jpg">
+  <meta property="og:url" content="https://veritasbuildersgroup.com/projects">
+  <meta property="og:type" content="website">
   <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAXElEQVR42u2UUQoAIAhDd59O0O272YIOEFORCBZ9Tl/qDGuO1gsDDPgYQFLPchEjF6bLUAlWBKg8UCkR6SaIDURujLoFkLBKyGCxPeA5vYvWDvBfZIABBhjwArAB4YKvpvjW5yYAAAAASUVORK5CYII=">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -691,7 +696,7 @@
 <body>
 
   <!-- NAV -->
-  <nav>
+  <nav aria-label="Main">
     <a href="/" class="nav-logo">
       <img src="public/logos/VeritasLogo-nav.png" alt="Veritas Builders Group">
     </a>
@@ -704,6 +709,8 @@
     </ul>
     <a href="tel:8503471467" class="nav-cta">850-347-1467</a>
   </nav>
+
+  <main>
 
   <!-- HERO SLIDER -->
   <section class="hero-slider" id="heroSlider" aria-label="Featured projects">
@@ -766,6 +773,8 @@
       </div>
     </div>
   </div>
+
+  </main>
 
   <!-- FOOTER -->
   <footer>
@@ -876,7 +885,7 @@
         card.setAttribute('tabindex', '0');
         card.setAttribute('aria-label', `${p.type}, ${p.location} — click to view`);
         card.innerHTML = `
-          <img src="${thumb}" alt="${p.type} — ${p.location}" />
+          <img src="${thumb}" alt="${p.type} — ${p.location}" loading="lazy" />
           ${hasMultiple ? `<div class="card-photo-count">${p.photos.length} photos</div>` : ''}
           <div class="card-overlay">
             <p class="card-type">${p.type}</p>
@@ -953,6 +962,8 @@
       lbClose.focus();
     }
 
+    let isDragging = false;
+
     function closeLightbox() {
       lightbox.classList.remove('open');
       document.body.style.overflow = '';
@@ -990,7 +1001,6 @@
     });
 
     // ── Before/After slider ────────────────────────────────────────────────
-    let isDragging = false;
 
     function setSliderPosition(pct) {
       pct = Math.max(5, Math.min(95, pct));

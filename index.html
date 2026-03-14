@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -922,7 +923,7 @@
 <body>
 
   <!-- NAV -->
-  <nav>
+  <nav aria-label="Main">
     <div class="nav-logo">
       <img src="public/logos/VeritasLogo-nav.png" alt="Veritas Builders Group">
     </div>
@@ -935,6 +936,8 @@
     </ul>
     <a href="tel:8503471467" class="nav-cta">850-347-1467</a>
   </nav>
+
+  <main>
 
   <!-- HERO -->
   <section class="hero">
@@ -1025,8 +1028,8 @@
     <p class="section-intro">Drag the slider to see the transformation — <span id="baProjectLabel">Kitchen Remodel · Monticello, FL</span></p>
 
     <div class="ba-container" id="baSlider">
-      <img class="ba-img ba-after" id="baAfterImg" src="/public/images/kitchen-after.jpg" alt="Kitchen remodel after — Monticello FL" />
-      <img class="ba-img ba-before" src="/public/images/kitchen-before.jpg" alt="Kitchen remodel before — Monticello FL" id="baBeforeImg" />
+      <img class="ba-img ba-after" id="baAfterImg" src="/public/images/kitchen-after.jpg" alt="Kitchen remodel after — Monticello FL" loading="lazy" />
+      <img class="ba-img ba-before" src="/public/images/kitchen-before.jpg" alt="Kitchen remodel before — Monticello FL" id="baBeforeImg" loading="lazy" />
       <div class="ba-divider" id="baDivider"></div>
       <div class="ba-handle" id="baHandle">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1064,7 +1067,7 @@
     </div>
     <div class="why-right">
       <div class="owners-photo-wrap">
-        <img src="/public/images/owners.jpg" alt="Dan and Mike — owners of Veritas Builders Group" class="owners-photo" />
+        <img src="/public/images/owners.jpg" alt="Dan and Mike — owners of Veritas Builders Group" class="owners-photo" loading="lazy" />
         <p class="owners-caption">Dan &amp; Mike — Owners</p>
       </div>
       <div class="license-block">
@@ -1143,26 +1146,26 @@
         <div class="form-row">
           <div class="form-field">
             <label for="fname">First Name</label>
-            <input type="text" id="fname" placeholder="John" required />
+            <input type="text" id="fname" name="first-name" autocomplete="given-name" placeholder="John" required />
           </div>
           <div class="form-field">
             <label for="lname">Last Name</label>
-            <input type="text" id="lname" placeholder="Smith" required />
+            <input type="text" id="lname" name="last-name" autocomplete="family-name" placeholder="Smith" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-field">
             <label for="phone">Phone</label>
-            <input type="tel" id="phone" placeholder="850-555-0100" />
+            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="850-555-0100" />
           </div>
           <div class="form-field">
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="you@email.com" required />
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="you@email.com" required />
           </div>
         </div>
         <div class="form-field">
           <label for="service">Project Type</label>
-          <select id="service">
+          <select id="service" name="service">
             <option value="">Select a service...</option>
             <option>Home Remodel</option>
             <option>Custom Build</option>
@@ -1174,13 +1177,16 @@
         </div>
         <div class="form-field">
           <label for="message">Tell Us About Your Project</label>
-          <textarea id="message" placeholder="Describe your project, timeline, or any questions you have..."></textarea>
+          <textarea id="message" name="message" placeholder="Describe your project, timeline, or any questions you have..."></textarea>
         </div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACq8OQEuVm2VJfYX" data-size="invisible" data-callback="onTsVerified" data-expired-callback="onTsExpired"></div>
         <button type="submit" class="form-submit">Send Message →</button>
         <p id="formMsg" style="font-family:'Source Serif 4',serif;font-size:0.85rem;color:#888;text-align:center;display:none;"></p>
       </form>
     </div>
   </section>
+
+  </main>
 
   <!-- FOOTER -->
   <footer>
@@ -1188,7 +1194,7 @@
       <img src="public/logos/VeritasLogo-nav.png" alt="Veritas Builders Group">
       <span>Licensed · Insured · CBC1266699 · Monticello, FL</span>
     </div>
-    <p class="footer-copy">© 2025 Veritas Builders Group LLC. All rights reserved.</p>
+    <p class="footer-copy">© 2026 Veritas Builders Group LLC. All rights reserved.</p>
     <ul class="footer-links">
       <li><a href="#services">Services</a></li>
       <li><a href="#work">Work</a></li>
@@ -1199,6 +1205,10 @@
   </footer>
 
   <script>
+    let cfToken = null;
+    function onTsVerified(token) { cfToken = token; }
+    function onTsExpired() { cfToken = null; }
+
     // Before/After Slider
     const slider = document.getElementById('baSlider');
     const beforeImg = document.getElementById('baBeforeImg');
@@ -1278,11 +1288,11 @@
     document.getElementById('baNext').addEventListener('click', () => { goToBA((baIndex + 1) % BA_PAIRS.length); startBATimer(); });
 
     // Pause timer while user is dragging, resume after
-    slider.addEventListener('mousedown', () => clearInterval(baTimer));
-    slider.addEventListener('touchstart', () => clearInterval(baTimer), { passive: true });
-    // mouseup/touchend: always restart (harmless if not mid-drag)
-    document.addEventListener('mouseup', startBATimer);
-    document.addEventListener('touchend', startBATimer);
+    let baSliderActive = false;
+    slider.addEventListener('mousedown', () => { baSliderActive = true; clearInterval(baTimer); });
+    slider.addEventListener('touchstart', () => { baSliderActive = true; clearInterval(baTimer); }, { passive: true });
+    document.addEventListener('mouseup', () => { if (baSliderActive) { baSliderActive = false; startBATimer(); } });
+    document.addEventListener('touchend', () => { if (baSliderActive) { baSliderActive = false; startBATimer(); } });
 
     startBATimer();
 
@@ -1298,6 +1308,13 @@
       const service = this.querySelector('#service')?.value || '';
       const message = this.querySelector('#message').value.trim();
 
+      if (!cfToken) {
+        msg.style.display = 'block';
+        msg.textContent = 'Verification pending — please wait a moment and try again.';
+        msg.style.color = 'var(--red-light)';
+        return;
+      }
+
       btn.disabled = true;
       btn.textContent = 'Sending…';
       msg.style.display = 'none';
@@ -1306,7 +1323,7 @@
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: `${fname} ${lname}`, email, phone, service, message }),
+          body: JSON.stringify({ name: `${fname} ${lname}`, email, phone, service, message, cfToken }),
         });
         if (res.ok) {
           msg.style.display = 'block';
