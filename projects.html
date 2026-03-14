@@ -802,14 +802,12 @@
     document.addEventListener('mouseup',  () => { isDragging = false; });
     document.addEventListener('touchend', () => { isDragging = false; });
 
-    document.addEventListener('DOMContentLoaded', () => {
-      renderCards();
-      document.querySelectorAll('.filter-pill').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          renderCards(btn.dataset.filter);
-        });
+    renderCards();
+    document.querySelectorAll('.filter-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderCards(btn.dataset.filter);
       });
     });
   </script>
