@@ -342,6 +342,40 @@
     .lb-label-before { left: 1rem; }
     .lb-label-after  { right: 1rem; }
 
+    /* Lightbox prev/next nav */
+    .lb-nav {
+      position: absolute;
+      top: -2.5rem;
+      left: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .lb-prev, .lb-next {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      color: var(--gray-300);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.1rem 0.4rem;
+      transition: color 0.2s;
+      line-height: 1;
+    }
+
+    .lb-prev:hover, .lb-next:hover { color: var(--white); }
+
+    .lb-photo-counter {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: var(--gray-600);
+      min-width: 3rem;
+      text-align: center;
+    }
+
     /* Single-image lightbox (no before) */
     .lb-single {
       width: 100%;
@@ -547,6 +581,11 @@
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project detail">
     <div class="lightbox-inner" id="lightboxInner">
       <button class="lightbox-close" id="lightboxClose">✕ Close</button>
+      <div class="lb-nav">
+        <button class="lb-prev" id="lbPrev">&#8592;</button>
+        <span class="lb-photo-counter" id="lbPhotoCounter"></span>
+        <button class="lb-next" id="lbNext">&#8594;</button>
+      </div>
 
       <!-- Slider view (before + after) -->
       <div class="lb-slider" id="lbSlider" style="display:none;">
@@ -706,34 +745,48 @@
     const lbHandle    = document.getElementById('lbHandle');
     const lbMetaType  = document.getElementById('lbMetaType');
     const lbMetaLoc   = document.getElementById('lbMetaLocation');
+    const lbPrevBtn      = document.getElementById('lbPrev');
+    const lbNextBtn      = document.getElementById('lbNext');
+    const lbPhotoCounter = document.getElementById('lbPhotoCounter');
 
-    function openLightbox(projectId) {
-      const p = PROJECTS.find(proj => proj.id === projectId);
-      if (!p) return;
+    let currentProject   = null;
+    let currentPhotoIndex = 0;
 
-      const type     = p.type;
-      const location = p.location;
-      const after    = p.photos[0].after  || '';
-      const before   = p.photos[0].before || '';
+    function showPhotoAtIndex(index) {
+      const photo = currentProject.photos[index];
+      const total = currentProject.photos.length;
 
-      lbMetaType.textContent = type;
-      lbMetaLoc.textContent  = location;
+      lbPhotoCounter.textContent = total > 1 ? `${index + 1} / ${total}` : '';
+      lbPrevBtn.style.display = total > 1 ? '' : 'none';
+      lbNextBtn.style.display = total > 1 ? '' : 'none';
 
-      if (before && after) {
-        lbAfterImg.src  = after;
-        lbAfterImg.alt  = type + ' — after';
-        lbBeforeImg.src = before;
-        lbBeforeImg.alt = type + ' — before';
+      if (photo.before && photo.after) {
+        lbAfterImg.src  = photo.after;
+        lbBeforeImg.src = photo.before;
         setSliderPosition(50);
         lbSlider.style.display = '';
         lbSingle.style.display = 'none';
       } else {
-        lbSingleImg.src = after || before;
-        lbSingleImg.alt = type;
+        lbSingleImg.src = photo.after || photo.before;
         lbSlider.style.display = 'none';
         lbSingle.style.display = '';
       }
+    }
 
+    function openLightbox(projectId, photoIndex = 0) {
+      currentProject = PROJECTS.find(proj => proj.id === projectId);
+      if (!currentProject) return;
+      currentPhotoIndex = photoIndex;
+
+      // Track click in localStorage
+      const key = 'clicks_' + projectId;
+      const count = parseInt(localStorage.getItem(key) || '0', 10);
+      localStorage.setItem(key, count + 1);
+
+      lbMetaType.textContent = currentProject.type;
+      lbMetaLoc.textContent  = currentProject.location;
+
+      showPhotoAtIndex(currentPhotoIndex);
       lightbox.classList.add('open');
       document.body.style.overflow = 'hidden';
       lbClose.focus();
@@ -753,11 +806,25 @@
       if (e.target === lightbox) closeLightbox();
     });
 
-    // Close via ESC key
+    // Close via ESC key; arrow keys navigate photos
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && lightbox.classList.contains('open')) {
-        closeLightbox();
-      }
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape')     closeLightbox();
+      if (e.key === 'ArrowLeft')  lbPrevBtn.click();
+      if (e.key === 'ArrowRight') lbNextBtn.click();
+    });
+
+    // ── Prev / Next navigation ───────────────────────────────────────────────
+    lbPrevBtn.addEventListener('click', () => {
+      if (!currentProject) return;
+      currentPhotoIndex = (currentPhotoIndex - 1 + currentProject.photos.length) % currentProject.photos.length;
+      showPhotoAtIndex(currentPhotoIndex);
+    });
+
+    lbNextBtn.addEventListener('click', () => {
+      if (!currentProject) return;
+      currentPhotoIndex = (currentPhotoIndex + 1) % currentProject.photos.length;
+      showPhotoAtIndex(currentPhotoIndex);
     });
 
     // ── Before/After slider ────────────────────────────────────────────────
