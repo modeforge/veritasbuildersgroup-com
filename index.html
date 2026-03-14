@@ -54,22 +54,10 @@
       height: 64px;
     }
 
-    .nav-logo {
-      font-family: 'Oswald', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      color: var(--white);
-      text-transform: uppercase;
-      line-height: 1.15;
-    }
-
-    .nav-logo span {
+    .nav-logo img {
+      height: 38px;
+      width: auto;
       display: block;
-      font-weight: 400;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      color: var(--gold);
     }
 
     .nav-links {
@@ -698,17 +686,16 @@
       flex-wrap: wrap;
     }
 
-    .footer-logo {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white);
+    .footer-logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+      margin-bottom: 0.4rem;
     }
 
     .footer-logo span {
       display: block;
+      font-family: 'Oswald', sans-serif;
       font-size: 0.6rem;
       font-weight: 400;
       letter-spacing: 0.25em;
@@ -767,7 +754,7 @@
     .testimonials-section .section-title { color: var(--white); margin-bottom: 3rem; }
     .testimonials-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
       max-width: 1100px;
       margin: 0 auto;
@@ -866,8 +853,7 @@
   <!-- NAV -->
   <nav>
     <div class="nav-logo">
-      Veritas Builders Group
-      <span>Licensed · Monticello, FL</span>
+      <img src="public/logos/VeritasLogo-nav.png" alt="Veritas Builders Group">
     </div>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
@@ -1015,17 +1001,10 @@
     <h2 class="section-title">Real Results.<br />Real Clients.</h2>
     <div class="testimonials-grid">
       <div class="testimonial-card">
-        <p class="testimonial-quote">"[TESTIMONIAL 1 — paste customer quote here, pulled from Google or Facebook review]"</p>
-        <p class="testimonial-attr">[First Name L.] &mdash; [Project Type], [City]</p>
+        <p class="testimonial-quote">"I wanted to let the community know what a great experience we had with Veritas Builders Group. We had a deck that had to be totally redone. Dan and Mike did a tremendous job removing the old deck, removing the debris and reframing for the new deck. They take so much pride in their work and did a wonderful job. We truly appreciated them being here when they said they would be and cleaning up which a lot of contractors seem to forget to do. We have other jobs we will have them do because of the quality of their work. Don't hesitate to have Dan and Mike do any of your remodeling or construction needs. The Best of the Best."</p>
+        <p class="testimonial-attr">Dina &mdash; Deck Rebuild, Jefferson County</p>
       </div>
-      <div class="testimonial-card">
-        <p class="testimonial-quote">"[TESTIMONIAL 2 — paste customer quote here, pulled from Google or Facebook review]"</p>
-        <p class="testimonial-attr">[First Name L.] &mdash; [Project Type], [City]</p>
-      </div>
-      <div class="testimonial-card">
-        <p class="testimonial-quote">"[TESTIMONIAL 3 — paste customer quote here, pulled from Google or Facebook review]"</p>
-        <p class="testimonial-attr">[First Name L.] &mdash; [Project Type], [City]</p>
-      </div>
+      <!-- Add testimonial cards here as new reviews come in -->
     </div>
   </section>
 
@@ -1121,7 +1100,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">
-      Veritas Builders Group LLC
+      <img src="public/logos/VeritasLogo-nav.png" alt="Veritas Builders Group">
       <span>Licensed · Insured · CBC1266699 · Monticello, FL</span>
     </div>
     <p class="footer-copy">© 2025 Veritas Builders Group LLC. All rights reserved.</p>

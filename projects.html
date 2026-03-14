@@ -49,23 +49,11 @@
       height: 64px;
     }
 
-    .nav-logo {
-      font-family: 'Oswald', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      color: var(--white);
-      text-transform: uppercase;
-      line-height: 1.15;
-      text-decoration: none;
-    }
-
-    .nav-logo span {
+    .nav-logo img {
+      height: 38px;
+      width: auto;
       display: block;
-      font-weight: 400;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      color: var(--gold);
+      text-decoration: none;
     }
 
     .nav-links {
@@ -389,17 +377,16 @@
       flex-wrap: wrap;
     }
 
-    .footer-logo {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white);
+    .footer-logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+      margin-bottom: 0.4rem;
     }
 
     .footer-logo span {
       display: block;
+      font-family: 'Oswald', sans-serif;
       font-size: 0.6rem;
       font-weight: 400;
       letter-spacing: 0.25em;
@@ -460,8 +447,7 @@
   <!-- NAV -->
   <nav>
     <a href="index.html" class="nav-logo">
-      Veritas Builders Group
-      <span>Licensed · Monticello, FL</span>
+      <img src="public/logos/VeritasLogo-nav.png" alt="Veritas Builders Group">
     </a>
     <ul class="nav-links">
       <li><a href="index.html#services">Services</a></li>
@@ -484,21 +470,93 @@
   <section class="projects-section">
     <div class="projects-grid">
 
-      <!-- To add a new project: duplicate the .project-card div below, update src, data-type, data-location, data-after, data-before, and the alt text -->
-      <div
-        class="project-card"
-        data-type="Kitchen Remodel"
-        data-location="Monticello, FL"
-        data-after="/public/images/kitchen-after.jpg"
-        data-before="/public/images/kitchen-before.jpg"
-        role="button"
-        tabindex="0"
-        aria-label="Kitchen Remodel, Monticello FL — click to view before and after"
-      >
-        <img src="/public/images/kitchen-after.jpg" alt="Kitchen remodel after — modern white shaker cabinets, granite countertops, Monticello FL" />
+      <!-- Kitchen Remodel — Monticello, FL -->
+      <div class="project-card" data-type="Kitchen Remodel" data-location="Monticello, FL" data-after="/public/images/kitchen-after.jpg" data-before="/public/images/kitchen-before.jpg" role="button" tabindex="0" aria-label="Kitchen Remodel, Monticello FL — click to view before and after">
+        <img src="/public/images/kitchen-after.jpg" alt="Kitchen remodel after — white shaker cabinets, granite countertops, Monticello FL" />
         <div class="card-overlay">
           <p class="card-type">Kitchen Remodel</p>
           <p class="card-location">Monticello, FL</p>
+        </div>
+      </div>
+
+      <!-- Kitchen Remodel — Jefferson County, FL -->
+      <div class="project-card" data-type="Kitchen Remodel" data-location="Jefferson County, FL" data-after="/public/images/jc-kitchen-after.jpg" data-before="/public/images/jc-kitchen-before.jpg" role="button" tabindex="0" aria-label="Kitchen Remodel, Jefferson County FL — click to view before and after">
+        <img src="/public/images/jc-kitchen-after.jpg" alt="Kitchen remodel after — grey shaker cabinets, quartz countertops, Jefferson County FL" />
+        <div class="card-overlay">
+          <p class="card-type">Kitchen Remodel</p>
+          <p class="card-location">Jefferson County, FL</p>
+        </div>
+      </div>
+
+      <!-- Kitchen Remodel — Madison County, FL -->
+      <div class="project-card" data-type="Kitchen Remodel" data-location="Madison County, FL" data-after="/public/images/mc-kitchen-after.jpg" data-before="/public/images/mc-kitchen-before.jpg" role="button" tabindex="0" aria-label="Kitchen Remodel, Madison County FL — click to view before and after">
+        <img src="/public/images/mc-kitchen-after.jpg" alt="Kitchen remodel after — white shaker cabinets, quartz island, Madison County FL" />
+        <div class="card-overlay">
+          <p class="card-type">Kitchen Remodel</p>
+          <p class="card-location">Madison County, FL</p>
+        </div>
+      </div>
+
+      <!-- Bathroom Remodel — Tallahassee, FL (bath1) -->
+      <div class="project-card" data-type="Bathroom Remodel" data-location="Tallahassee, FL" data-after="/public/images/lc-bath1-after.jpg" data-before="/public/images/lc-bath1-before.jpg" role="button" tabindex="0" aria-label="Bathroom Remodel, Tallahassee FL — click to view before and after">
+        <img src="/public/images/lc-bath1-after.jpg" alt="Bathroom remodel after — marble tile, walk-in shower, Tallahassee FL" />
+        <div class="card-overlay">
+          <p class="card-type">Bathroom Remodel</p>
+          <p class="card-location">Tallahassee, FL</p>
+        </div>
+      </div>
+
+      <!-- Bathroom Remodel — Tallahassee, FL (bath2) -->
+      <div class="project-card" data-type="Bathroom Remodel" data-location="Tallahassee, FL" data-after="/public/images/lc-bath2-after.jpg" data-before="/public/images/lc-bath2-before.jpg" role="button" tabindex="0" aria-label="Bathroom Remodel, Tallahassee FL — click to view before and after">
+        <img src="/public/images/lc-bath2-after.jpg" alt="Bathroom remodel after — double vanity, LED mirrors, walk-in shower, Tallahassee FL" />
+        <div class="card-overlay">
+          <p class="card-type">Bathroom Remodel</p>
+          <p class="card-location">Tallahassee, FL</p>
+        </div>
+      </div>
+
+      <!-- Bathroom Remodel — Jefferson County, FL -->
+      <div class="project-card" data-type="Bathroom Remodel" data-location="Jefferson County, FL" data-after="/public/images/jc-bath-after.jpg" data-before="/public/images/jc-bath-before.jpg" role="button" tabindex="0" aria-label="Bathroom Remodel, Jefferson County FL — click to view before and after">
+        <img src="/public/images/jc-bath-after.jpg" alt="Bathroom remodel after — frameless glass shower, LVP flooring, Jefferson County FL" />
+        <div class="card-overlay">
+          <p class="card-type">Bathroom Remodel</p>
+          <p class="card-location">Jefferson County, FL</p>
+        </div>
+      </div>
+
+      <!-- Screened Porch Enclosure — Jefferson County, FL -->
+      <div class="project-card" data-type="Screened Porch" data-location="Jefferson County, FL" data-after="/public/images/jc-porch-after.jpg" data-before="/public/images/jc-porch-before.jpg" role="button" tabindex="0" aria-label="Screened Porch Enclosure, Jefferson County FL — click to view before and after">
+        <img src="/public/images/jc-porch-after.jpg" alt="Screened porch enclosure after — full screen wall, recessed lighting, Jefferson County FL" />
+        <div class="card-overlay">
+          <p class="card-type">Screened Porch</p>
+          <p class="card-location">Jefferson County, FL</p>
+        </div>
+      </div>
+
+      <!-- Porch Rebuild — Jefferson County, FL -->
+      <div class="project-card" data-type="Porch Rebuild" data-location="Jefferson County, FL" data-after="/public/images/jc-porch2-after.jpg" data-before="/public/images/jc-porch2-before.jpg" role="button" tabindex="0" aria-label="Porch Rebuild, Jefferson County FL — click to view before and after">
+        <img src="/public/images/jc-porch2-after.jpg" alt="Porch rebuild after — craftsman timber frame entry, new steps, Jefferson County FL" />
+        <div class="card-overlay">
+          <p class="card-type">Porch Rebuild</p>
+          <p class="card-location">Jefferson County, FL</p>
+        </div>
+      </div>
+
+      <!-- Deck Replacement — Tallahassee, FL -->
+      <div class="project-card" data-type="Deck Replacement" data-location="Tallahassee, FL" data-after="/public/images/lc-deck-after.jpg" data-before="/public/images/lc-deck-before.jpg" role="button" tabindex="0" aria-label="Deck Replacement, Tallahassee FL — click to view before and after">
+        <img src="/public/images/lc-deck-after.jpg" alt="Deck replacement after — new elevated deck with railing, Tallahassee FL" />
+        <div class="card-overlay">
+          <p class="card-type">Deck Replacement</p>
+          <p class="card-location">Tallahassee, FL</p>
+        </div>
+      </div>
+
+      <!-- New Deck & Entry — Jefferson County, FL -->
+      <div class="project-card" data-type="New Deck & Entry" data-location="Jefferson County, FL" data-after="/public/images/jc-deck.jpg" role="button" tabindex="0" aria-label="New Deck and Entry, Jefferson County FL — click to view">
+        <img src="/public/images/jc-deck.jpg" alt="New deck and entry steps — pressure treated lumber, wire panel railing, Jefferson County FL" />
+        <div class="card-overlay">
+          <p class="card-type">New Deck & Entry</p>
+          <p class="card-location">Jefferson County, FL</p>
         </div>
       </div>
 
@@ -535,7 +593,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">
-      Veritas Builders Group LLC
+      <img src="public/logos/VeritasLogo-nav.png" alt="Veritas Builders Group">
       <span>Licensed · Insured · CBC1266699 · Monticello, FL</span>
     </div>
     <p class="footer-copy">© 2026 Veritas Builders Group LLC. All rights reserved.</p>
