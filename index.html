@@ -804,6 +804,58 @@
       .testimonials-grid { grid-template-columns: 1fr; }
     }
 
+    /* ── BA CYCLING NAV ── */
+    .ba-container { transition: opacity 0.35s ease; }
+
+    .ba-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .ba-prev, .ba-next {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: var(--white);
+      font-size: 1.2rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .ba-prev:hover, .ba-next:hover {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    .ba-dots {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .ba-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .ba-dot.active {
+      background: var(--red);
+      transform: scale(1.35);
+    }
+
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
@@ -970,11 +1022,11 @@
   <section class="ba-section" id="work">
     <p class="section-label">Our Work</p>
     <h2 class="section-title" style="color:white">Before &amp; After</h2>
-    <p class="section-intro">Drag the slider to see the transformation. This kitchen remodel is just one example of the craftsmanship we bring to every project.</p>
+    <p class="section-intro">Drag the slider to see the transformation — <span id="baProjectLabel">Kitchen Remodel · Monticello, FL</span></p>
 
     <div class="ba-container" id="baSlider">
-      <img class="ba-img ba-after" src="/public/images/kitchen-after.jpg" alt="Kitchen remodel after — modern white shaker cabinets, granite countertops, Monticello FL" />
-      <img class="ba-img ba-before" src="/public/images/kitchen-before.jpg" alt="Kitchen before remodel — original 1970s cabinets and wallpaper, Monticello FL" id="baBeforeImg" />
+      <img class="ba-img ba-after" id="baAfterImg" src="/public/images/kitchen-after.jpg" alt="Kitchen remodel after — Monticello FL" />
+      <img class="ba-img ba-before" src="/public/images/kitchen-before.jpg" alt="Kitchen remodel before — Monticello FL" id="baBeforeImg" />
       <div class="ba-divider" id="baDivider"></div>
       <div class="ba-handle" id="baHandle">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -984,7 +1036,14 @@
       <span class="ba-label ba-label-before">Before</span>
       <span class="ba-label ba-label-after">After</span>
     </div>
-    <div style="text-align:center; margin-top:2.5rem;">
+
+    <div class="ba-nav">
+      <button class="ba-prev" id="baPrev" aria-label="Previous project">&#8592;</button>
+      <div class="ba-dots" id="baDots"></div>
+      <button class="ba-next" id="baNext" aria-label="Next project">&#8594;</button>
+    </div>
+
+    <div style="text-align:center; margin-top:2rem;">
       <a href="/projects" class="btn-outline">See All Projects</a>
     </div>
   </section>
@@ -1143,6 +1202,7 @@
     // Before/After Slider
     const slider = document.getElementById('baSlider');
     const beforeImg = document.getElementById('baBeforeImg');
+    const afterImg = document.getElementById('baAfterImg');
     const divider = document.getElementById('baDivider');
     const handle = document.getElementById('baHandle');
     let isDragging = false;
@@ -1166,6 +1226,65 @@
     document.addEventListener('touchmove', e => { if (isDragging) setPosition(getPercent(e, slider)); }, {passive:true});
     document.addEventListener('mouseup', () => isDragging = false);
     document.addEventListener('touchend', () => isDragging = false);
+
+    // ── BA CYCLING SLIDER ──
+    const BA_PAIRS = [
+      { label: 'Kitchen Remodel · Monticello, FL',      before: '/public/images/kitchen-before.jpg',    after: '/public/images/kitchen-after.jpg' },
+      { label: 'Kitchen Remodel · Jefferson County, FL', before: '/public/images/jc-kitchen-before.jpg', after: '/public/images/jc-kitchen-after.jpg' },
+      { label: 'Deck & Porch · Tallahassee, FL',        before: '/public/images/lc-deck-before.jpg',    after: '/public/images/lc-deck-after.jpg' },
+      { label: 'Deck & Porch · Jefferson County, FL',   before: '/public/images/jc-porch-before.jpg',   after: '/public/images/jc-porch-after.jpg' },
+    ];
+
+    let baIndex = 0;
+    let baTimer = null;
+
+    // Preload all images up front
+    BA_PAIRS.forEach(p => {
+      [p.before, p.after].forEach(src => { const i = new Image(); i.src = src; });
+    });
+
+    // Build dots
+    const baDots = document.getElementById('baDots');
+    BA_PAIRS.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'ba-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'View project ' + (i + 1));
+      dot.addEventListener('click', () => { goToBA(i); startBATimer(); });
+      baDots.appendChild(dot);
+    });
+
+    function goToBA(index) {
+      baIndex = index;
+      const pair = BA_PAIRS[index];
+      slider.style.opacity = '0';
+      setTimeout(() => {
+        afterImg.src = pair.after;
+        afterImg.alt = pair.label + ' — after';
+        beforeImg.src = pair.before;
+        beforeImg.alt = pair.label + ' — before';
+        setPosition(50);
+        document.getElementById('baProjectLabel').textContent = pair.label;
+        document.querySelectorAll('.ba-dot').forEach((d, i) => d.classList.toggle('active', i === index));
+        slider.style.opacity = '1';
+      }, 350);
+    }
+
+    function startBATimer() {
+      clearInterval(baTimer);
+      baTimer = setInterval(() => goToBA((baIndex + 1) % BA_PAIRS.length), 7000);
+    }
+
+    document.getElementById('baPrev').addEventListener('click', () => { goToBA((baIndex - 1 + BA_PAIRS.length) % BA_PAIRS.length); startBATimer(); });
+    document.getElementById('baNext').addEventListener('click', () => { goToBA((baIndex + 1) % BA_PAIRS.length); startBATimer(); });
+
+    // Pause timer while user is dragging, resume after
+    slider.addEventListener('mousedown', () => clearInterval(baTimer));
+    slider.addEventListener('touchstart', () => clearInterval(baTimer), { passive: true });
+    // mouseup/touchend: always restart (harmless if not mid-drag)
+    document.addEventListener('mouseup', startBATimer);
+    document.addEventListener('touchend', startBATimer);
+
+    startBATimer();
 
     // Form
     document.querySelector('.contact-form').addEventListener('submit', async function(e) {
