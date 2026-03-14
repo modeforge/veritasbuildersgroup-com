@@ -966,11 +966,6 @@
       showPhotoAtIndex(currentPhotoIndex);
     });
 
-    // ── Hero slider state ────────────────────────────────────────────────────
-    let heroProjects = [];
-    let heroIndex = 0;
-    let heroTimer = null;
-
     // ── Before/After slider ────────────────────────────────────────────────
     let isDragging = false;
 
@@ -1031,6 +1026,11 @@
         })
         .sort((a, b) => b.score - a.score);
     }
+
+    // ── Hero slider state ────────────────────────────────────────────────────
+    let heroProjects = [];
+    let heroIndex = 0;
+    let heroTimer = null;
 
     function buildHeroSlider() {
       heroProjects = computeHeroOrder();
