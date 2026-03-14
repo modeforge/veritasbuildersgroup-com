@@ -966,6 +966,11 @@
       showPhotoAtIndex(currentPhotoIndex);
     });
 
+    // ── Hero slider state ────────────────────────────────────────────────────
+    let heroProjects = [];
+    let heroIndex = 0;
+    let heroTimer = null;
+
     // ── Before/After slider ────────────────────────────────────────────────
     let isDragging = false;
 
@@ -1008,6 +1013,95 @@
     document.addEventListener('mouseup',  () => { isDragging = false; });
     document.addEventListener('touchend', () => { isDragging = false; });
 
+    // ── Hero slider functions ────────────────────────────────────────────────
+    function computeHeroOrder() {
+      const now = Date.now();
+      const MS_PER_DAY = 86400000;
+      const RECENCY_WINDOW = 60; // days
+
+      return [...PROJECTS]
+        .map(p => {
+          const clicks    = parseInt(localStorage.getItem('clicks_' + p.id) || '0', 10);
+          const daysOld   = (now - new Date(p.addedDate).getTime()) / MS_PER_DAY;
+          const random    = Math.random();
+          const recency   = daysOld < RECENCY_WINDOW ? ((RECENCY_WINDOW - daysOld) / RECENCY_WINDOW) * 1.5 : 0;
+          const clickScore = clicks > 0 ? Math.sqrt(clicks) * 0.4 : 1.2; // unclicked gets boost
+          const score     = random + recency + clickScore;
+          return { ...p, score };
+        })
+        .sort((a, b) => b.score - a.score);
+    }
+
+    function buildHeroSlider() {
+      heroProjects = computeHeroOrder();
+
+      const slidesEl = document.getElementById('heroSlides');
+      const dotsEl   = document.getElementById('heroDots');
+      slidesEl.innerHTML = '';
+      dotsEl.innerHTML   = '';
+
+      heroProjects.forEach((p, i) => {
+        const thumb = p.photos[0].after || p.photos[0].before;
+
+        const slide = document.createElement('div');
+        slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+        slide.style.backgroundImage = `url('${thumb}')`;
+        slide.innerHTML = `
+          <div class="hero-slide-overlay"></div>
+          <div class="hero-slide-content">
+            <p class="hero-slide-type">${p.type}</p>
+            <p class="hero-slide-location">${p.location}</p>
+            <button class="hero-slide-cta" data-id="${p.id}">View Project →</button>
+          </div>`;
+        slidesEl.appendChild(slide);
+
+        const dot = document.createElement('button');
+        dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        dot.addEventListener('click', () => { goToHeroSlide(i); startHeroTimer(); });
+        dotsEl.appendChild(dot);
+      });
+
+      // Wire CTA buttons — open lightbox directly
+      slidesEl.querySelectorAll('.hero-slide-cta').forEach(btn => {
+        btn.addEventListener('click', () => openLightbox(btn.dataset.id));
+      });
+
+      startHeroTimer();
+    }
+
+    function goToHeroSlide(index) {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots   = document.querySelectorAll('.hero-dot');
+      slides[heroIndex].classList.remove('active');
+      dots[heroIndex].classList.remove('active');
+      heroIndex = ((index % heroProjects.length) + heroProjects.length) % heroProjects.length;
+      slides[heroIndex].classList.add('active');
+      dots[heroIndex].classList.add('active');
+    }
+
+    function startHeroTimer() {
+      clearInterval(heroTimer);
+      heroTimer = setInterval(() => goToHeroSlide(heroIndex + 1), 4000);
+    }
+
+    // ── Hero slider event wiring ─────────────────────────────────────────────
+    // Pause on hover
+    const heroSliderEl = document.getElementById('heroSlider');
+    heroSliderEl.addEventListener('mouseenter', () => clearInterval(heroTimer));
+    heroSliderEl.addEventListener('mouseleave', startHeroTimer);
+
+    // Arrow buttons
+    document.getElementById('heroPrev').addEventListener('click', () => {
+      goToHeroSlide(heroIndex - 1);
+      startHeroTimer();
+    });
+    document.getElementById('heroNext').addEventListener('click', () => {
+      goToHeroSlide(heroIndex + 1);
+      startHeroTimer();
+    });
+
+    buildHeroSlider();
     renderCards();
     document.querySelectorAll('.filter-pill').forEach(btn => {
       btn.addEventListener('click', () => {
