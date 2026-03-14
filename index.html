@@ -1075,7 +1075,7 @@
       </div>
     </div>
     <div>
-      <form class="contact-form" onsubmit="handleSubmit(event)">
+      <form class="contact-form">
         <div class="form-row">
           <div class="form-field">
             <label for="fname">First Name</label>
@@ -1162,14 +1162,44 @@
     document.addEventListener('touchend', () => isDragging = false);
 
     // Form
-    function handleSubmit(e) {
+    document.querySelector('.contact-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       const msg = document.getElementById('formMsg');
-      msg.style.display = 'block';
-      msg.style.color = '#B8A97A';
-      msg.textContent = '✓ Thanks! We'll be in touch within one business day.';
-      e.target.reset();
-    }
+      const btn = this.querySelector('.form-submit');
+      const fname = this.querySelector('#fname').value.trim();
+      const lname = this.querySelector('#lname').value.trim();
+      const email = this.querySelector('#email').value.trim();
+      const phone = this.querySelector('#phone')?.value.trim() || '';
+      const service = this.querySelector('#service')?.value || '';
+      const message = this.querySelector('#message').value.trim();
+
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      msg.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: `${fname} ${lname}`, email, phone, service, message }),
+        });
+        if (res.ok) {
+          msg.style.display = 'block';
+          msg.style.color = '#B8A97A';
+          msg.textContent = '✓ Message sent. We\'ll be in touch within one business day.';
+          this.reset();
+        } else {
+          throw new Error();
+        }
+      } catch {
+        msg.style.display = 'block';
+        msg.style.color = '#E74C3C';
+        msg.textContent = 'Something went wrong. Please call us at 850-347-1467.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send Message →';
+      }
+    });
   </script>
 </body>
 </html>
