@@ -39,7 +39,7 @@ export default async function handler(req, res) {
   try {
     await resend.emails.send({
       from: 'Veritas Builders Group <noreply@veritasbuildersgroup.com>',
-      to: 'admin@veritasbuildersgroup.com',
+      to: 'dan@veritasbuildersgroup.com',
       replyTo: esc(email),
       subject: `New contact form submission from ${esc(name)}`,
       html: `
