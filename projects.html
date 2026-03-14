@@ -268,6 +268,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      -webkit-user-drag: none;
+      user-select: none;
       display: block;
     }
 
@@ -570,8 +572,8 @@
 
       <!-- Slider view (before + after) -->
       <div class="lb-slider" id="lbSlider" style="display:none;">
-        <img class="lb-after-img"  id="lbAfterImg"  src="" alt="After" />
-        <img class="lb-before-img" id="lbBeforeImg" src="" alt="Before" />
+        <img class="lb-after-img"  id="lbAfterImg"  src="" alt="After"   draggable="false" />
+        <img class="lb-before-img" id="lbBeforeImg" src="" alt="Before" draggable="false" />
         <div class="lb-divider" id="lbDivider"></div>
         <div class="lb-handle"  id="lbHandle">&#9664;&#9654;</div>
         <span class="lb-label lb-label-before">Before</span>
@@ -700,6 +702,7 @@
     }
 
     lbSlider.addEventListener('mousedown', e => {
+      e.preventDefault();
       isDragging = true;
       setSliderPosition(getSliderPercent(e, lbSlider));
     });
