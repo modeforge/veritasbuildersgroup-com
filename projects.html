@@ -96,9 +96,131 @@
 
     .nav-cta:hover { background: var(--red-dark); }
 
+    /* ── HERO SLIDER ── */
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      height: 58vh;
+      min-height: 320px;
+      overflow: hidden;
+      background: var(--gray-900);
+      margin-top: 64px; /* nav height */
+    }
+
+    .hero-slides {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero-slide.active { opacity: 1; }
+
+    .hero-slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,26,26,0.82) 0%, rgba(26,26,26,0.1) 60%);
+    }
+
+    .hero-slide-content {
+      position: absolute;
+      bottom: 4rem;
+      left: 5rem;
+    }
+
+    .hero-slide-type {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--red-light);
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-slide-location {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-slide-cta {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--red);
+      border: none;
+      padding: 0.65rem 1.4rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .hero-slide-cta:hover { background: var(--red-dark); }
+
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(26,26,26,0.5);
+      color: var(--white);
+      border: none;
+      font-size: 1.4rem;
+      width: 2.8rem;
+      height: 2.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+
+    .hero-arrow:hover { background: rgba(26,26,26,0.85); }
+    .hero-arrow-prev { left: 1.5rem; }
+    .hero-arrow-next { right: 1.5rem; }
+
+    .hero-dots {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+
+    .hero-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s;
+    }
+
+    .hero-dot.active { background: var(--white); }
+
     /* ── PAGE HEADER ── */
     .page-header {
-      padding: 10rem 5rem 5rem;
+      padding: 5rem 5rem 5rem;
       background: var(--gray-900);
       border-bottom: 2px solid var(--red);
     }
@@ -521,18 +643,21 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .projects-grid { grid-template-columns: repeat(2, 1fr); }
-      .page-header { padding: 8rem 2.5rem 4rem; }
+      .page-header { padding: 4rem 2.5rem 4rem; }
       .projects-section { padding: 3rem 2.5rem; }
       footer { padding: 2rem; flex-direction: column; text-align: center; }
       nav { padding: 0 1.5rem; }
       .nav-links { display: none; }
       .lb-slider { height: 50vw; min-height: 220px; }
       .lb-single { height: 50vw; min-height: 220px; }
+      .hero-slider { height: 52vw; min-height: 240px; }
+      .hero-slide-content { bottom: 2.5rem; left: 1.5rem; }
+      .hero-slide-location { font-size: 1.4rem; }
     }
 
     @media (max-width: 600px) {
       .projects-grid { grid-template-columns: 1fr; }
-      .page-header { padding: 7rem 1.5rem 3rem; }
+      .page-header { padding: 3rem 1.5rem 3rem; }
       .projects-section { padding: 2.5rem 1.5rem; }
       .lightbox-inner { width: 96vw; }
       .lb-slider { height: 55vw; min-height: 200px; }
@@ -556,6 +681,16 @@
     </ul>
     <a href="tel:8503471467" class="nav-cta">850-347-1467</a>
   </nav>
+
+  <!-- HERO SLIDER -->
+  <section class="hero-slider" id="heroSlider" aria-label="Featured projects">
+    <div class="hero-slides" id="heroSlides"></div>
+
+    <button class="hero-arrow hero-arrow-prev" id="heroPrev" aria-label="Previous slide">&#8592;</button>
+    <button class="hero-arrow hero-arrow-next" id="heroNext" aria-label="Next slide">&#8594;</button>
+
+    <div class="hero-dots" id="heroDots"></div>
+  </section>
 
   <!-- PAGE HEADER -->
   <header class="page-header">
