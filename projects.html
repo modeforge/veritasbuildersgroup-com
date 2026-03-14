@@ -464,38 +464,56 @@
     .lb-label-before { left: 1rem; }
     .lb-label-after  { right: 1rem; }
 
-    /* Lightbox prev/next nav */
+    /* Lightbox prev/next nav — overlaid on the image area */
     .lb-nav {
       position: absolute;
-      top: -2.5rem;
+      top: 0;
       left: 0;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      right: 0;
+      height: 60vh;
+      pointer-events: none;
+      z-index: 20;
     }
 
     .lb-prev, .lb-next {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.1rem;
-      color: var(--gray-300);
-      background: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(26,26,26,0.6);
+      color: var(--white);
       border: none;
+      width: 3.2rem;
+      height: 3.2rem;
       cursor: pointer;
-      padding: 0.1rem 0.4rem;
-      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      pointer-events: auto;
+      transition: background 0.2s;
+      padding: 0;
       line-height: 1;
     }
 
-    .lb-prev:hover, .lb-next:hover { color: var(--white); }
+    .lb-prev { left: 0; }
+    .lb-next { right: 0; }
+    .lb-prev:hover, .lb-next:hover { background: rgba(26,26,26,0.92); }
 
     .lb-photo-counter {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--red);
+      color: var(--white);
       font-family: 'Oswald', sans-serif;
       font-size: 0.7rem;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      color: var(--gray-300);
-      min-width: 3rem;
-      text-align: center;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      pointer-events: none;
+      white-space: nowrap;
     }
 
     /* Single-image lightbox (no before) */
@@ -650,6 +668,7 @@
       .nav-links { display: none; }
       .lb-slider { height: 50vw; min-height: 220px; }
       .lb-single { height: 50vw; min-height: 220px; }
+      .lb-nav { height: 50vw; min-height: 220px; }
       .hero-slider { height: 52vw; min-height: 240px; }
       .hero-slide-content { bottom: 2.5rem; left: 1.5rem; }
       .hero-slide-location { font-size: 1.4rem; }
@@ -662,6 +681,7 @@
       .lightbox-inner { width: 96vw; }
       .lb-slider { height: 55vw; min-height: 200px; }
       .lb-single { height: 55vw; min-height: 200px; }
+      .lb-nav { height: 55vw; min-height: 200px; }
       .filter-bar { padding: 1.5rem 1.5rem 0; }
       .hero-arrow { width: 2.2rem; height: 2.2rem; font-size: 1.1rem; }
       .hero-dot { padding: 0.4rem; }
@@ -894,7 +914,7 @@
       const photo = currentProject.photos[index];
       const total = currentProject.photos.length;
 
-      lbPhotoCounter.textContent = total > 1 ? `${index + 1} / ${total}` : '';
+      lbPhotoCounter.textContent = total > 1 ? `Photo ${index + 1} of ${total}` : '';
       lbPrevBtn.style.display = total > 1 ? '' : 'none';
       lbNextBtn.style.display = total > 1 ? '' : 'none';
 
@@ -1052,8 +1072,8 @@
         slide.innerHTML = `
           <div class="hero-slide-overlay"></div>
           <div class="hero-slide-content">
-            <p class="hero-slide-type">${p.type}</p>
-            <p class="hero-slide-location">${p.location}</p>
+            <p class="hero-slide-type">${p.location}</p>
+            <p class="hero-slide-location">${p.type}</p>
             <button class="hero-slide-cta" data-id="${p.id}">View Project →</button>
           </div>`;
         slidesEl.appendChild(slide);
