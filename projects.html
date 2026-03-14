@@ -628,7 +628,7 @@
       grid.innerHTML = '';
       PROJECTS.forEach(p => {
         if (filter !== 'All' && p.type !== filter) return;
-        const thumb = p.photos[0].after;
+        const thumb = p.photos[0].after || p.photos[0].before;
         const hasMultiple = p.photos.length > 1;
         const card = document.createElement('div');
         card.className = 'project-card';
@@ -650,8 +650,6 @@
         grid.appendChild(card);
       });
     }
-
-    renderCards();
 
     // ── Lightbox DOM refs ────────────────────────────────────────────────────
     const lightbox    = document.getElementById('lightbox');
@@ -761,6 +759,10 @@
 
     document.addEventListener('mouseup',  () => { isDragging = false; });
     document.addEventListener('touchend', () => { isDragging = false; });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCards();
+    });
   </script>
 
 </body>
