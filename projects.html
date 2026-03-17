@@ -60,7 +60,7 @@
     }
 
     .nav-logo img {
-      height: 38px;
+      height: 50px;
       width: auto;
       display: block;
       text-decoration: none;
@@ -91,9 +91,9 @@
 
     .nav-cta {
       font-family: 'Oswald', sans-serif;
-      font-size: 0.78rem;
+      font-size: 1rem;
       font-weight: 600;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       background: var(--red);
       color: var(--white);
@@ -127,12 +127,13 @@
       position: absolute;
       inset: 0;
       opacity: 0;
+      pointer-events: none;
       transition: opacity 0.6s ease;
       background-size: cover;
       background-position: center;
     }
 
-    .hero-slide.active { opacity: 1; }
+    .hero-slide.active { opacity: 1; pointer-events: auto; }
 
     .hero-slide-overlay {
       position: absolute;
@@ -709,6 +710,7 @@
       <li><a href="/#services">Services</a></li>
       <li><a href="/#work">Our Work</a></li>
       <li><a href="/projects" class="active">Projects</a></li>
+      <li><a href="/#reviews">Reviews</a></li>
       <li><a href="/#about">About</a></li>
       <li><a href="/#contact">Contact</a></li>
     </ul>
@@ -731,7 +733,7 @@
   <header class="page-header">
     <p class="page-eyebrow">Our Work</p>
     <h1 class="page-h1">Project Gallery</h1>
-    <p class="page-intro">Real jobs, real results — from kitchen transformations to full custom builds across Jefferson County and North Florida.</p>
+    <p class="page-intro">Real projects, real results — from kitchen transformations to custom home builds across Tallahassee and North Florida's Big Bend.</p>
   </header>
 
   <!-- FILTER BAR -->
