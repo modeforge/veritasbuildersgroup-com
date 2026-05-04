@@ -775,6 +775,41 @@
 
     .footer-links a:hover { color: var(--red-light); }
 
+    .powered-by {
+      background: #0d0d0d;
+      border-top: 1px solid #222;
+      padding: 0.75rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .powered-by span {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: #555;
+      letter-spacing: 0.04em;
+    }
+
+    .powered-by a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      opacity: 0.45;
+      transition: opacity 0.2s;
+    }
+
+    .powered-by a:hover { opacity: 0.8; }
+
+    .powered-by a img {
+      height: 18px;
+      width: auto;
+      display: block;
+      filter: invert(1);
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .hero { min-height: 85vh; }
@@ -1219,6 +1254,11 @@
       <li><a href="https://www.facebook.com/p/Veritas-Builders-Group-61567931803930/" target="_blank" rel="noopener">Facebook</a></li>
     </ul>
   </footer>
+
+  <div class="powered-by">
+    <span>Powered by</span>
+    <a href="https://modeforge.ai" target="_blank" rel="noopener"><img src="/public/logos/modeforge-logo.png" alt="MODEFORGE"></a>
+  </div>
 
   <script>
     let cfToken = null;
